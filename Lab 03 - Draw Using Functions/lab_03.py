@@ -2,6 +2,7 @@ import arcade
 SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 600
 
+
 def draw_luna(x, y):
     """ Draw a moon """
 
@@ -13,6 +14,7 @@ def draw_luna(x, y):
     arcade.draw_circle_filled(x + 25, y + 20, 7, arcade.csscolor.GRAY)
     arcade.draw_circle_filled(x - 15, y - 25, 8, arcade.csscolor.GRAY)
     arcade.draw_circle_filled(x + 25, y - 5, 10, arcade.csscolor.GRAY)
+
 
 def draw_stars():
     """ Draw the stars """
@@ -26,10 +28,12 @@ def draw_stars():
     arcade.draw_circle_filled(600, 540, 2, arcade.csscolor.WHITE)
     arcade.draw_circle_filled(500, 495, 2, arcade.csscolor.WHITE)
 
+
 def draw_water():
     """ Draw the ground """
 
     arcade.draw_lrtb_rectangle_filled(0, SCREEN_WIDTH, SCREEN_HEIGHT / 2, 0, arcade.csscolor.DARK_BLUE)
+
 
 def draw_buoy(x, y):
     """ Draw a buoy"""
@@ -43,11 +47,13 @@ def draw_buoy(x, y):
     # The light
     arcade.draw_circle_filled(575 + x, 268 + y, 8, arcade.csscolor.GOLD)
 
+
 def draw_destroyer(x, y):
     """ Draw a destroyer """
 
     # The hull
-    arcade.draw_polygon_filled(((200 + x, 350 + y), (600 + x, 350 + y), (500 + x, 300 + y), (300 + x, 300 + y)), arcade.csscolor.GRAY)
+    arcade.draw_polygon_filled(((200 + x, 350 + y), (600 + x, 350 + y), (500 + x, 300 + y), (300 + x, 300 + y)), arcade.
+                               csscolor.GRAY)
 
     # Main gun
     arcade.draw_lrtb_rectangle_filled(520 + x, 600 + x, 370 + y, 363 + y, arcade.csscolor.DARK_CYAN)
@@ -67,6 +73,7 @@ def draw_destroyer(x, y):
     arcade.draw_ellipse_filled(220 + x, 368 + y, 5, 20, arcade.csscolor.YELLOW)
     arcade.draw_triangle_filled(240 + x, 370 + y, 220 + x, 350 + y, 260 + x, 350 + y, arcade.csscolor.CADET_BLUE)
     arcade.draw_polygon_filled(((x, 450 + y), (220 + x, 375 + y), (220 + x, 360 + y), (x, 330 + y)), arcade.csscolor.LIGHT_GOLDENROD_YELLOW)
+
 
 def main():
 
@@ -88,5 +95,6 @@ def main():
     arcade.finish_render()
 
     arcade.run()
+
 
 main()
