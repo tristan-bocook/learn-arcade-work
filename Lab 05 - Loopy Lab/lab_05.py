@@ -28,7 +28,6 @@ def draw_section_2():
     # Below, replace "pass" with your code for the loop.
     # Use the modulus operator and an if statement to select the color
     # Don't loop from 30 to 60 to shift everything over, just add 300 to x.
-    # pass
     for row in range(30):
         for column in range(30):
             # row is 0 when and column is 0 x and y is 5x5
@@ -43,7 +42,6 @@ def draw_section_2():
 def draw_section_3():
     # Use the modulus operator and an if/else statement to select the color.
     # Don't use multiple 'if' statements.
-    # pass
     for row in range(30):
         for column in range(30):
             # row is 0 when and column is 0 x and y is 5x5
@@ -57,7 +55,6 @@ def draw_section_3():
 
 def draw_section_4():
     # Use the modulus operator and just one 'if' statement to select the color.
-    # pass
     for row in range(30):
         for column in range(30):
             # row is 0 when and column is 0 x and y is 5x5
@@ -71,7 +68,6 @@ def draw_section_4():
 
 def draw_section_5():
     # Do NOT use 'if' statements to complete 5-8. Manipulate the loops instead.
-    # pass
     for row in range(30):
         for column in range(row + 1):
             # row is 0 when and column is 0 x and y is 5x5
@@ -81,7 +77,6 @@ def draw_section_5():
 
 
 def draw_section_6():
-    # pass
     for row in range(30):
         for column in range(row + 1):
             # row is 0 when and column is 0 x and y is 5x5
@@ -91,7 +86,6 @@ def draw_section_6():
 
 
 def draw_section_7():
-    # pass
     for row in range(30):
         for column in range(row + 1):
             # row is 0 when and column is 0 x and y is 5x5
@@ -101,7 +95,6 @@ def draw_section_7():
 
 
 def draw_section_8():
-    # pass
     for row in range(30):
         for column in range(row + 1):
             # row is 0 when and column is 0 x and y is 5x5
