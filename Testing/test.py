@@ -1,14 +1,49 @@
-class Book():
+import arcade
 
-    def __init__(self):
-        self.title = ""
-        self.author = ""
-        self.pages = 0
+WIDTH = 50
+HEIGHT = 50
+MARGIN = 5
+ROW_COUNT = 10
+COLUMN_COUNT = 10
+
+SCREEN_WIDTH = WIDTH * COLUMN_COUNT + (MARGIN + 1) * COLUMN_COUNT
+SCREEN_HEIGHT = HEIGHT * ROW_COUNT + (MARGIN + 1) * ROW_COUNT
+
+
+class MyGame(arcade.Window):
+    """
+    Main application class.
+    """
+
+    def __init__(self, width, height):
+        super().__init__(width, height)
+
+        arcade.set_background_color(arcade.color.BLACK)
+
+    def on_draw(self):
+        """
+        Render the screen.
+        """
+
+        arcade.start_render()
+        for row in range(ROW_COUNT):
+            for column in range(COLUMN_COUNT):
+                arcade.draw_rectangle_filled((WIDTH / 2) + (column * (WIDTH + MARGIN)) + MARGIN,
+                    (HEIGHT/ 2) + (row * (HEIGHT + MARGIN)) + MARGIN,
+                    WIDTH, HEIGHT, arcade.color.ICTERINE)
+
+    def on_mouse_press(self, x, y, button, key_modifiers):
+        """
+        Called when the user presses a mouse button.
+        """
+        pass
 
 
 def main():
-    my_book = Book()
-    my_book.pages = "295"
+
+    window = MyGame(SCREEN_WIDTH, SCREEN_HEIGHT)
+    arcade.run()
 
 
-main()
+if __name__ == "__main__":
+    main()
