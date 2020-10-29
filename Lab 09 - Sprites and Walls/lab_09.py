@@ -33,6 +33,7 @@ class Room:
     def __init__(self):
         # You may want many lists. Lists for coins, monsters, etc.
         self.wall_list = None
+        self.oil_list = None
 
         # This holds the background images. If you don't want changing
         # background images, you can delete this part.
@@ -51,6 +52,7 @@ def setup_room_1():
     """ Set up the game and initialize the variables. """
     # Sprite lists
     room.wall_list = arcade.SpriteList()
+    room.oil_list = arcade.SpriteList()
 
     # -- Set up the walls
     # Create bottom and top row of boxes
@@ -142,26 +144,26 @@ def setup_room_1():
         # Coin image from kenney.nl
         oil = arcade.Sprite("oil.png", SPRITE_SCALING_OIL)
 
-    oil_placed_successfully = False
+        oil_placed_successfully = False
 
-    # Keep trying until success
-    while not oil_placed_successfully:
-        # Position the coin
-        oil.center_x = random.randrange(SCREEN_WIDTH)
-        oil.center_y = random.randrange(SCREEN_HEIGHT)
+        # Keep trying until success
+        while not oil_placed_successfully:
+            # Position the coin
+            oil.center_x = random.randrange(SCREEN_WIDTH)
+            oil.center_y = random.randrange(SCREEN_HEIGHT)
 
-        # See if the coin is hitting a wall
-        wall_hit_list = arcade.check_for_collision_with_list(oil, room.wall_list)
+            # See if the coin is hitting a wall
+            wall_hit_list = arcade.check_for_collision_with_list(oil, room.wall_list)
 
-        # See if the coin is hitting another coin
-        oil_hit_list = arcade.check_for_collision_with_list(oil, room.oil_list)
+            # See if the coin is hitting another coin
+            oil_hit_list = arcade.check_for_collision_with_list(oil, room.oil_list)
 
-        if len(wall_hit_list) == 0 and len(oil_list) == 0:
-            # It is!
-            oil_placed_successfully = True
+            if len(wall_hit_list) == 0 and len(oil_hit_list) == 0:
+                # It is!
+                oil_placed_successfully = True
 
-    # Add the coin to the lists
-    room.oil_list.append(oil)
+        # Add the coin to the lists
+        room.oil_list.append(oil)
 
     # Load the background image for this level.
     # https: // www.needpix.com / about
@@ -179,6 +181,7 @@ def setup_room_2():
     """ Set up the game and initialize the variables. """
     # Sprite lists
     room.wall_list = arcade.SpriteList()
+    room.oil_list = arcade.SpriteList()
 
     # -- Set up the walls
     # Create bottom and top row of boxes
@@ -241,6 +244,32 @@ def setup_room_2():
     wall.bottom = 3 * SPRITE_SIZE
     room.wall_list.append(wall)
 
+    for i in range(NUMBER_OF_OIL):
+        # Create the coin instance
+        # Coin image from kenney.nl
+        oil = arcade.Sprite("oil.png", SPRITE_SCALING_OIL)
+
+        oil_placed_successfully = False
+
+        # Keep trying until success
+        while not oil_placed_successfully:
+            # Position the coin
+            oil.center_x = random.randrange(SCREEN_WIDTH)
+            oil.center_y = random.randrange(SCREEN_HEIGHT)
+
+            # See if the coin is hitting a wall
+            wall_hit_list = arcade.check_for_collision_with_list(oil, room.wall_list)
+
+            # See if the coin is hitting another coin
+            oil_hit_list = arcade.check_for_collision_with_list(oil, room.oil_list)
+
+            if len(wall_hit_list) == 0 and len(oil_hit_list) == 0:
+                # It is!
+                oil_placed_successfully = True
+
+        # Add the coin to the lists
+        room.oil_list.append(oil)
+
     # https: // pixabay.com / illustrations / search / nebula /
     room.background = arcade.load_texture("galaxy.png")
 
@@ -259,6 +288,7 @@ def setup_room_3():
     """ Set up the game and initialize the variables. """
     # Sprite lists
     room.wall_list = arcade.SpriteList()
+    room.oil_list = arcade.SpriteList()
 
     # -- Set up the walls
     # Create bottom and top row of boxes
@@ -326,6 +356,31 @@ def setup_room_3():
     room.wall_list.append(wall)
 
     # If you want coins or monsters in a level, then add that code here.
+    for i in range(NUMBER_OF_OIL):
+        # Create the coin instance
+        # Coin image from kenney.nl
+        oil = arcade.Sprite("oil.png", SPRITE_SCALING_OIL)
+
+        oil_placed_successfully = False
+
+        # Keep trying until success
+        while not oil_placed_successfully:
+            # Position the coin
+            oil.center_x = random.randrange(SCREEN_WIDTH)
+            oil.center_y = random.randrange(SCREEN_HEIGHT)
+
+            # See if the coin is hitting a wall
+            wall_hit_list = arcade.check_for_collision_with_list(oil, room.wall_list)
+
+            # See if the coin is hitting another coin
+            oil_hit_list = arcade.check_for_collision_with_list(oil, room.oil_list)
+
+            if len(wall_hit_list) == 0 and len(oil_hit_list) == 0:
+                # It is!
+                oil_placed_successfully = True
+
+        # Add the coin to the lists
+        room.oil_list.append(oil)
 
     # Load the background image for this level.
     # https://www.astrobin.com/264452/?nc=all
@@ -346,6 +401,7 @@ def setup_room_4():
     """ Set up the game and initialize the variables. """
     # Sprite lists
     room.wall_list = arcade.SpriteList()
+    room.oil_list = arcade.SpriteList()
 
     # -- Set up the walls
     # Create bottom and top row of boxes
@@ -403,6 +459,31 @@ def setup_room_4():
         room.wall_list.append(wall)
 
     # If you want coins or monsters in a level, then add that code here.
+    for i in range(NUMBER_OF_OIL):
+        # Create the coin instance
+        # Coin image from kenney.nl
+        oil = arcade.Sprite("oil.png", SPRITE_SCALING_OIL)
+
+        oil_placed_successfully = False
+
+        # Keep trying until success
+        while not oil_placed_successfully:
+            # Position the coin
+            oil.center_x = random.randrange(SCREEN_WIDTH)
+            oil.center_y = random.randrange(SCREEN_HEIGHT)
+
+            # See if the coin is hitting a wall
+            wall_hit_list = arcade.check_for_collision_with_list(oil, room.wall_list)
+
+            # See if the coin is hitting another coin
+            oil_hit_list = arcade.check_for_collision_with_list(oil, room.oil_list)
+
+            if len(wall_hit_list) == 0 and len(oil_hit_list) == 0:
+                # It is!
+                oil_placed_successfully = True
+
+        # Add the coin to the lists
+        room.oil_list.append(oil)
 
     # Load the background image for this level.
     # https://www.nytimes.com/2020/08/07/science/supernova-neutron-star-sn1987a.html
@@ -436,7 +517,7 @@ class MyGame(arcade.Window):
         self.player_list = None
         self.physics_engine = None
 
-        self.bad_sound = arcade.load_sound("error4.wav")
+        self.good_sound = arcade.load_sound("coin4.wav")
 
     def setup(self):
         """ Set up the game and initialize the variables. """
@@ -492,16 +573,11 @@ class MyGame(arcade.Window):
         # above for each list.
 
         self.player_list.draw()
-        self.oil_list.draw()
+        self.rooms[self.current_room].oil_list.draw()
 
         # Put the text on the screen.
         output = f"Score: {self.score}"
         arcade.draw_text(output, 10, 20, arcade.color.WHITE, 14)
-
-        if len(self.oil_list) == 0:
-            output = "Game Over!"
-            arcade.draw_text(output, 310, 300, arcade.color.WHITE, 30)
-
 
     def on_key_press(self, key, modifiers):
         """Called whenever a key is pressed. """
@@ -568,12 +644,11 @@ class MyGame(arcade.Window):
                                                              self.rooms[self.current_room].wall_list)
             self.player_sprite.center_y = SCREEN_HEIGHT
 
-        if len(self.oil_list) > 0:
-            self.oil_list.update()
-            self.asteroid_list.update()
+        if len(self.rooms[self.current_room].oil_list) > 0:
+            self.rooms[self.current_room].oil_list.update()
 
         # Generate a list of all sprites that collided with the player.
-        oil_hit_list = arcade.check_for_collision_with_list(self.player_sprite, self.oil_list)
+        oil_hit_list = arcade.check_for_collision_with_list(self.player_sprite, self.rooms[self.current_room].oil_list)
 
         # Loop through each colliding sprite, remove it, and add to the score.
         for oil in oil_hit_list:
