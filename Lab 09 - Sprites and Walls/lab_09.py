@@ -436,6 +436,8 @@ class MyGame(arcade.Window):
         self.player_list = None
         self.physics_engine = None
 
+        self.bad_sound = arcade.load_sound("error4.wav")
+
     def setup(self):
         """ Set up the game and initialize the variables. """
         # Set up the player
@@ -461,6 +463,8 @@ class MyGame(arcade.Window):
 
         room = setup_room_4()
         self.rooms.append(room)
+
+        self.score = 0
 
         # Our starting room number
         self.current_room = 0
@@ -489,6 +493,15 @@ class MyGame(arcade.Window):
 
         self.player_list.draw()
         self.oil_list.draw()
+
+        # Put the text on the screen.
+        output = f"Score: {self.score}"
+        arcade.draw_text(output, 10, 20, arcade.color.WHITE, 14)
+
+        if len(self.oil_list) == 0:
+            output = "Game Over!"
+            arcade.draw_text(output, 310, 300, arcade.color.WHITE, 30)
+
 
     def on_key_press(self, key, modifiers):
         """Called whenever a key is pressed. """
@@ -554,6 +567,19 @@ class MyGame(arcade.Window):
             self.physics_engine = arcade.PhysicsEngineSimple(self.player_sprite,
                                                              self.rooms[self.current_room].wall_list)
             self.player_sprite.center_y = SCREEN_HEIGHT
+
+        if len(self.oil_list) > 0:
+            self.oil_list.update()
+            self.asteroid_list.update()
+
+        # Generate a list of all sprites that collided with the player.
+        oil_hit_list = arcade.check_for_collision_with_list(self.player_sprite, self.oil_list)
+
+        # Loop through each colliding sprite, remove it, and add to the score.
+        for oil in oil_hit_list:
+            oil.remove_from_sprite_lists()
+            arcade.play_sound(self.good_sound, volume=0.01)
+            self.score += 1
 
 
 def main():
