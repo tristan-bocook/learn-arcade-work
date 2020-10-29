@@ -8,16 +8,19 @@ python -m arcade.examples.sprite_rooms
 """
 
 import arcade
+import random
 import os
 
 SPRITE_SCALING = 0.5
-SPRITE_NATIVE_SIZE = 128
+SPRITE_SCALING_OIL = 0.05
+NUMBER_OF_OIL = 25
+SPRITE_NATIVE_SIZE = 150
 SPRITE_SIZE = int(SPRITE_NATIVE_SIZE * SPRITE_SCALING)
-WALL_SCALING = 1
+WALL_SCALING = 1.2
 
 SCREEN_WIDTH = SPRITE_SIZE * 14
 SCREEN_HEIGHT = SPRITE_SIZE * 10
-SCREEN_TITLE = "Sprite Rooms Example"
+SCREEN_TITLE = "The Space Odyssey but it's a 4 room coin collecting game."
 
 MOVEMENT_SPEED = 5
 
@@ -73,13 +76,92 @@ def setup_room_1():
                 wall.left = x
                 wall.bottom = y
                 room.wall_list.append(wall)
-    # Kenny.nl
-    wall = arcade.Sprite("corridor_wall.png", WALL_SCALING)
-    wall.left = 7 * SPRITE_SIZE
-    wall.bottom = 5 * SPRITE_SIZE
+
+    coordinate_list = [[2, 3],
+                       [3.15, 4.15],
+                       [4.25, 4.15],
+                       [4.25, 5.3],
+                       [5.39, 5.3]]
+    for coordinate in coordinate_list:
+        wall = arcade.Sprite("corridor_wall.png", WALL_SCALING)
+        wall.left = coordinate[0] * SPRITE_SIZE
+        wall.bottom = coordinate[1] * SPRITE_SIZE
+        room.wall_list.append(wall)
+
+    coordinate_list = [[6.5, 5.3],
+                       [7.6, 5.3],
+                       [7.6, 4.15],
+                       [8.75, 4.15],
+                       [9.9, 3]]
+    for coordinate in coordinate_list:
+        wall = arcade.Sprite("corridor_wall.png", WALL_SCALING)
+        wall.left = coordinate[0] * SPRITE_SIZE
+        wall.bottom = coordinate[1] * SPRITE_SIZE
+        room.wall_list.append(wall)
+
+    wall = arcade.Sprite("machine_barrel_NW.png", WALL_SCALING)
+    wall.left = 11 * SPRITE_SIZE
+    wall.bottom = 7 * SPRITE_SIZE
     room.wall_list.append(wall)
 
+    wall = arcade.Sprite("machine_barrel_NW.png", WALL_SCALING)
+    wall.left = 6 * SPRITE_SIZE
+    wall.bottom = 1.5 * SPRITE_SIZE
+    room.wall_list.append(wall)
+
+    wall = arcade.Sprite("machine_barrel_NW.png", WALL_SCALING)
+    wall.left = 6 * SPRITE_SIZE
+    wall.bottom = 2.7 * SPRITE_SIZE
+    room.wall_list.append(wall)
+
+    wall = arcade.Sprite("machine_barrel_NW.png", WALL_SCALING)
+    wall.left = 6 * SPRITE_SIZE
+    wall.bottom = 3.9 * SPRITE_SIZE
+    room.wall_list.append(wall)
+
+    wall = arcade.Sprite("machine_barrel_NW.png", WALL_SCALING)
+    wall.left = 2 * SPRITE_SIZE
+    wall.bottom = 7 * SPRITE_SIZE
+    room.wall_list.append(wall)
+
+    wall = arcade.Sprite("machine_barrel_NW.png", WALL_SCALING)
+    wall.left = 10 * SPRITE_SIZE
+    wall.bottom = 6 * SPRITE_SIZE
+    room.wall_list.append(wall)
+
+    for y in range(7, 9):
+        wall = arcade.Sprite("machine_barrel_NW.png", WALL_SCALING)
+        wall.left = 8 * SPRITE_SIZE
+        wall.bottom = y * SPRITE_SIZE
+        room.wall_list.append(wall)
+
     # If you want coins or monsters in a level, then add that code here.
+    # Boolean variable if we successfully placed the coin
+    for i in range(NUMBER_OF_OIL):
+        # Create the coin instance
+        # Coin image from kenney.nl
+        oil = arcade.Sprite("oil.png", SPRITE_SCALING_OIL)
+
+    oil_placed_successfully = False
+
+    # Keep trying until success
+    while not oil_placed_successfully:
+        # Position the coin
+        oil.center_x = random.randrange(SCREEN_WIDTH)
+        oil.center_y = random.randrange(SCREEN_HEIGHT)
+
+        # See if the coin is hitting a wall
+        wall_hit_list = arcade.check_for_collision_with_list(oil, room.wall_list)
+
+        # See if the coin is hitting another coin
+        oil_hit_list = arcade.check_for_collision_with_list(oil, room.oil_list)
+
+        if len(wall_hit_list) == 0 and len(oil_list) == 0:
+            # It is!
+            oil_placed_successfully = True
+
+    # Add the coin to the lists
+    room.oil_list.append(oil)
 
     # Load the background image for this level.
     # https: // www.needpix.com / about
@@ -124,10 +206,41 @@ def setup_room_2():
                 wall.bottom = y
                 room.wall_list.append(wall)
     # Kenny.nl
-    wall = arcade.Sprite("corridor_wall.png", WALL_SCALING)
-    wall.left = 5 * SPRITE_SIZE
-    wall.bottom = 6 * SPRITE_SIZE
+
+    for y in range(3, 9):
+        wall = arcade.Sprite("machine_barrel_NW.png", WALL_SCALING)
+        wall.left = 3 * SPRITE_SIZE
+        wall.bottom = y * SPRITE_SIZE
+        room.wall_list.append(wall)
+
+    for x in range(4, 11):
+        wall = arcade.Sprite("corridor_wall.png", WALL_SCALING)
+        wall.left = x * SPRITE_SIZE
+        wall.bottom = 5 * SPRITE_SIZE
+        room.wall_list.append(wall)
+
+    wall = arcade.Sprite("machine_barrel_NW.png", WALL_SCALING)
+    wall.left = 10.5 * SPRITE_SIZE
+    wall.bottom = 6.15 * SPRITE_SIZE
     room.wall_list.append(wall)
+
+    for y in range(1, 4):
+        wall = arcade.Sprite("machine_barrel_NW.png", WALL_SCALING)
+        wall.left = 5 * SPRITE_SIZE
+        wall.bottom = y * SPRITE_SIZE
+        room.wall_list.append(wall)
+
+    for y in range(2, 5):
+        wall = arcade.Sprite("machine_barrel_NW.png", WALL_SCALING)
+        wall.left = 10.5 * SPRITE_SIZE
+        wall.bottom = y * SPRITE_SIZE
+        room.wall_list.append(wall)
+
+    wall = arcade.Sprite("machine_barrel_NW.png", WALL_SCALING)
+    wall.left = 7.5 * SPRITE_SIZE
+    wall.bottom = 3 * SPRITE_SIZE
+    room.wall_list.append(wall)
+
     # https: // pixabay.com / illustrations / search / nebula /
     room.background = arcade.load_texture("galaxy.png")
 
@@ -153,7 +266,7 @@ def setup_room_3():
     for y in (0, SCREEN_HEIGHT - SPRITE_SIZE):
         # Loop for each box going across
         for x in range(0, SCREEN_WIDTH, SPRITE_SIZE):
-            if (x != SPRITE_SIZE * 6 and x != SPRITE_SIZE * 7) or y == 0:
+            if (x != SPRITE_SIZE * 6 and x != SPRITE_SIZE * 7) or y == SCREEN_HEIGHT - SPRITE_SIZE:
                 # Kenny.nl
                 wall = arcade.Sprite("corridor_wall.png", WALL_SCALING)
                 wall.left = x
@@ -166,22 +279,57 @@ def setup_room_3():
         for y in range(SPRITE_SIZE, SCREEN_HEIGHT - SPRITE_SIZE, SPRITE_SIZE):
             # Skip making a block 4 and 5 blocks up on the right side
             # Kenny.nl
-            if (y != SPRITE_SIZE * 4 and y != SPRITE_SIZE * 5) or x == 0:
+            if (y != SPRITE_SIZE * 4 and y != SPRITE_SIZE * 5) or x == SCREEN_WIDTH - SPRITE_SIZE:
                 wall = arcade.Sprite("corridor_wall.png", WALL_SCALING)
                 wall.left = x
                 wall.bottom = y
                 room.wall_list.append(wall)
     # Kenny.nl
+    for x in range(1, 5):
+        wall = arcade.Sprite("corridor_wall.png", WALL_SCALING)
+        wall.left = x * SPRITE_SIZE
+        wall.bottom = 7 * SPRITE_SIZE
+        room.wall_list.append(wall)
+    # Kenny.nl
+    for y in range(1, 6):
+        wall = arcade.Sprite("machine_barrel_NW.png", WALL_SCALING)
+        wall.left = 3 * SPRITE_SIZE
+        wall.bottom = y * SPRITE_SIZE
+        room.wall_list.append(wall)
+
+    coordinate_list = [[8.35, 4.15],
+                       [9.5, 4.15],
+                       [10.6, 4.15],
+                       [10.6, 5.3],
+                       [11.74, 5.3]]
+    for coordinate in coordinate_list:
+        wall = arcade.Sprite("corridor_wall.png", WALL_SCALING)
+        wall.left = coordinate[0] * SPRITE_SIZE
+        wall.bottom = coordinate[1] * SPRITE_SIZE
+        room.wall_list.append(wall)
+
+    for x in range(4, 7):
+        wall = arcade.Sprite("machine_barrel_NW.png", WALL_SCALING)
+        wall.left = x * SPRITE_SIZE
+        wall.bottom = 3 * SPRITE_SIZE
+        room.wall_list.append(wall)
+
+    for y in range(7, 9):
+        wall = arcade.Sprite("machine_barrel_NW.png", WALL_SCALING)
+        wall.left = 7 * SPRITE_SIZE
+        wall.bottom = y * SPRITE_SIZE
+        room.wall_list.append(wall)
+
     wall = arcade.Sprite("corridor_wall.png", WALL_SCALING)
-    wall.left = 7 * SPRITE_SIZE
-    wall.bottom = 5 * SPRITE_SIZE
+    wall.left = 10 * SPRITE_SIZE
+    wall.bottom = 1.15 * SPRITE_SIZE
     room.wall_list.append(wall)
 
     # If you want coins or monsters in a level, then add that code here.
 
     # Load the background image for this level.
-    # https: // www.needpix.com / about
-    room.background = arcade.load_texture("nebula.png")
+    # https://www.astrobin.com/264452/?nc=all
+    room.background = arcade.load_texture("nebula.jpg")
 
     return room
 
@@ -205,7 +353,7 @@ def setup_room_4():
     for y in (0, SCREEN_HEIGHT - SPRITE_SIZE):
         # Loop for each box going across
         for x in range(0, SCREEN_WIDTH, SPRITE_SIZE):
-            if (x != SPRITE_SIZE * 6 and x != SPRITE_SIZE * 7) or y == 0:
+            if (x != SPRITE_SIZE * 6 and x != SPRITE_SIZE * 7) or y == SCREEN_HEIGHT - SPRITE_SIZE:
                 # Kenny.nl
                 wall = arcade.Sprite("corridor_wall.png", WALL_SCALING)
                 wall.left = x
@@ -224,16 +372,41 @@ def setup_room_4():
                 wall.bottom = y
                 room.wall_list.append(wall)
     # Kenny.nl
-    wall = arcade.Sprite("corridor_wall.png", WALL_SCALING)
-    wall.left = 7 * SPRITE_SIZE
-    wall.bottom = 5 * SPRITE_SIZE
-    room.wall_list.append(wall)
+    for x in range(3, 9):
+        wall = arcade.Sprite("corridor_wall.png", WALL_SCALING)
+        wall.left = x * SPRITE_SIZE
+        wall.bottom = 6.5 * SPRITE_SIZE
+        room.wall_list.append(wall)
+
+    for x in range(3, 9):
+        wall = arcade.Sprite("corridor_wall.png", WALL_SCALING)
+        wall.left = x * SPRITE_SIZE
+        wall.bottom = 2 * SPRITE_SIZE
+        room.wall_list.append(wall)
+
+    for y in range(1, 7):
+        wall = arcade.Sprite("corridor_wall.png", WALL_SCALING)
+        wall.left = 8 * SPRITE_SIZE
+        wall.bottom = y * SPRITE_SIZE
+        room.wall_list.append(wall)
+
+    for x in range(1, 7):
+        wall = arcade.Sprite("machine_barrel_NW.png", WALL_SCALING)
+        wall.left = x * SPRITE_SIZE
+        wall.bottom = 4.4 * SPRITE_SIZE
+        room.wall_list.append(wall)
+
+    for y in range(3, 9):
+        wall = arcade.Sprite("machine_barrel_NW.png", WALL_SCALING)
+        wall.left = 10.5 * SPRITE_SIZE
+        wall.bottom = y * SPRITE_SIZE
+        room.wall_list.append(wall)
 
     # If you want coins or monsters in a level, then add that code here.
 
     # Load the background image for this level.
-    # https: // www.needpix.com / about
-    room.background = arcade.load_texture("nebula.png")
+    # https://www.nytimes.com/2020/08/07/science/supernova-neutron-star-sn1987a.html
+    room.background = arcade.load_texture("supernova.jpg")
 
     return room
 
@@ -269,7 +442,7 @@ class MyGame(arcade.Window):
         # Kenny.nl
         self.player_sprite = arcade.Sprite("character_robot_idle.png", SPRITE_SCALING)
         self.player_sprite.center_x = 100
-        self.player_sprite.center_y = 100
+        self.player_sprite.center_y = 200
         self.player_list = arcade.SpriteList()
         self.player_list.append(self.player_sprite)
 
@@ -315,6 +488,7 @@ class MyGame(arcade.Window):
         # above for each list.
 
         self.player_list.draw()
+        self.oil_list.draw()
 
     def on_key_press(self, key, modifiers):
         """Called whenever a key is pressed. """
@@ -345,16 +519,41 @@ class MyGame(arcade.Window):
 
         # Do some logic here to figure out what room we are in, and if we need to go
         # to a different room.
-        if self.player_sprite.center_x > SCREEN_WIDTH and self.current_room == 0:
-            self.current_room = 1
+        if self.player_sprite.center_x > SCREEN_WIDTH:
+            if self.current_room == 0:
+                self.current_room = 1
+            elif self.current_room == 3:
+                self.current_room = 2
             self.physics_engine = arcade.PhysicsEngineSimple(self.player_sprite,
                                                              self.rooms[self.current_room].wall_list)
             self.player_sprite.center_x = 0
-        elif self.player_sprite.center_x < 0 and self.current_room == 1:
-            self.current_room = 0
+
+        elif self.player_sprite.center_x < 0:
+            if self.current_room == 1:
+                self.current_room = 0
+            elif self.current_room == 2:
+                self.current_room = 3
             self.physics_engine = arcade.PhysicsEngineSimple(self.player_sprite,
                                                              self.rooms[self.current_room].wall_list)
             self.player_sprite.center_x = SCREEN_WIDTH
+
+        elif self.player_sprite.center_y > SCREEN_HEIGHT:
+            if self.current_room == 1:
+                self.current_room = 2
+            elif self.current_room == 0:
+                self.current_room = 3
+            self.physics_engine = arcade.PhysicsEngineSimple(self.player_sprite,
+                                                             self.rooms[self.current_room].wall_list)
+            self.player_sprite.center_y = 0
+
+        elif self.player_sprite.center_y < 0:
+            if self.current_room == 2:
+                self.current_room = 1
+            elif self.current_room == 3:
+                self.current_room = 0
+            self.physics_engine = arcade.PhysicsEngineSimple(self.player_sprite,
+                                                             self.rooms[self.current_room].wall_list)
+            self.player_sprite.center_y = SCREEN_HEIGHT
 
 
 def main():
