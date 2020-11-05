@@ -57,7 +57,6 @@ class MyGame(arcade.Window):
         Called when the user presses a mouse button.
         """
 
-
         grid_x = int(x // (WIDTH + MARGIN))
 
         grid_y = int(y // (HEIGHT + MARGIN))
