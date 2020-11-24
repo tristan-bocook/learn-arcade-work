@@ -211,6 +211,14 @@ class MyGame(arcade.View):
             # Add the enemy to the lists
             self.enemy_list.append(enemy)
 
+        # Make each of the shields
+        self.shield_list = arcade.SpriteList(is_static=True)
+        for x in range(75, 800, 190):
+            self.make_shield(x)
+
+        self.player_bullet_list = arcade.SpriteList()
+        self.enemy_bullet_list = arcade.SpriteList()
+
     def setup_level_two(self):
         print("bruh")
         self.background = arcade.load_texture("battleground1.png")
@@ -255,6 +263,16 @@ class MyGame(arcade.View):
             # Add the enemy to the lists
             self.enemy_list.append(enemy)
 
+            # re-use list to create the multiple enemy types
+
+        # Make each of the shields
+        self.shield_list = arcade.SpriteList(is_static=True)
+        for x in range(75, 800, 190):
+            self.make_shield(x)
+
+        self.player_bullet_list = arcade.SpriteList()
+        self.enemy_bullet_list = arcade.SpriteList()
+
     def make_shield(self, x_start):
         """
         Make a shield, which is just a 2D grid of solid color sprites
@@ -283,8 +301,6 @@ class MyGame(arcade.View):
         # Sprite lists
         self.player_list = arcade.SpriteList()
         self.enemy_list = arcade.SpriteList()
-        self.player_bullet_list = arcade.SpriteList()
-        self.enemy_bullet_list = arcade.SpriteList()
         self.shield_list = arcade.SpriteList(is_static=True)
 
         # Set up the player
@@ -296,9 +312,6 @@ class MyGame(arcade.View):
         self.player_sprite.center_y = 40
         self.player_list.append(self.player_sprite)
 
-        # Make each of the shields
-        for x in range(75, 800, 190):
-            self.make_shield(x)
 
         # Set the background color
         arcade.set_background_color(arcade.color.AMAZON)
