@@ -29,6 +29,14 @@ GAME_OVER = 1
 PLAY_GAME = 0
 
 
+class Enemy(arcade.Sprite):
+    def __init__(self):
+        super().__init__()
+        self.hitpoints = 1
+
+        self.enemy_textures = None
+
+
 class MenuView(arcade.View):
     def on_show(self):
         arcade.set_background_color(arcade.color.WHITE)
@@ -152,6 +160,7 @@ class MyGame(arcade.View):
         self.draw_time = 0
         self.fps = 0
 
+
         # Enemy movement
         self.enemy_change_x = -ENEMY_SPEED
 
@@ -171,11 +180,11 @@ class MyGame(arcade.View):
         self.background = arcade.load_texture("stalingrad.jpg")
 
         # Load the textures for the enemies, one facing left, one right
-        self.enemy_textures = []
+        enemy_textures = []
         texture = arcade.load_texture("nazisoldier.png", mirrored=True)
-        self.enemy_textures.append(texture)
+        enemy_textures.append(texture)
         texture = arcade.load_texture("nazisoldier.png")
-        self.enemy_textures.append(texture)
+        enemy_textures.append(texture)
 
         # Create rows and columns of enemies
         positions = [380, 580], \
@@ -203,14 +212,16 @@ class MyGame(arcade.View):
 
             # Create the enemy instance
             # enemy image from kenney.nl
-            enemy = arcade.Sprite()
+            enemy = Enemy()
             enemy.scale = SPRITE_SCALING_enemy
-            enemy.texture = self.enemy_textures[1]
+            enemy.texture = enemy_textures[1]
+            enemy.enemy_textures = enemy_textures
             # Position the enemy
             enemy.position = position
             # Add the enemy to the lists
             self.enemy_list.append(enemy)
 
+            enemy.hitpoints = 1
         # Make each of the shields
         self.shield_list = arcade.SpriteList(is_static=True)
         for x in range(75, 800, 190):
@@ -224,11 +235,11 @@ class MyGame(arcade.View):
         self.background = arcade.load_texture("battleground1.png")
 
         # Load the textures for the enemies, one facing left, one right
-        self.enemy_textures = []
+        enemy_textures = []
         texture = arcade.load_texture("naziSS.png", mirrored=True)
-        self.enemy_textures.append(texture)
+        enemy_textures.append(texture)
         texture = arcade.load_texture("naziSS.png")
-        self.enemy_textures.append(texture)
+        enemy_textures.append(texture)
 
         # Create rows and columns of enemies
         positions = [380, 580], \
@@ -255,9 +266,33 @@ class MyGame(arcade.View):
         for position in positions:
             # Create the enemy instance
             # enemy image from kenney.nl
-            enemy = arcade.Sprite()
+            enemy = Enemy()
             enemy.scale = SPRITE_SCALING_enemy
-            enemy.texture = self.enemy_textures[1]
+            enemy.texture = enemy_textures[1]
+            enemy.enemy_textures = enemy_textures
+            # Position the enemy
+            enemy.position = position
+            # Add the enemy to the lists
+            self.enemy_list.append(enemy)
+
+            # Load the textures for the enemies, one facing left, one right
+        enemy_textures = []
+        texture = arcade.load_texture("ubernazisoldier.png", mirrored=True)
+        enemy_textures.append(texture)
+        texture = arcade.load_texture("ubernazisoldier.png")
+        enemy_textures.append(texture)
+
+        # Create rows and columns of enemies
+        positions = [200, 580], \
+                    [420, 300]
+
+        for position in positions:
+            # Create the enemy instance
+            # enemy image from kenney.nl
+            enemy = Enemy()
+            enemy.scale = SPRITE_SCALING_enemy
+            enemy.texture = enemy_textures[1]
+            enemy.enemy_textures = enemy_textures
             # Position the enemy
             enemy.position = position
             # Add the enemy to the lists
@@ -423,9 +458,9 @@ class MyGame(arcade.View):
                 enemy.center_y -= ENEMY_MOVE_DOWN_AMOUNT
                 # Flip texture on enemy so it faces the other way
                 if self.enemy_change_x > 0:
-                    enemy.texture = self.enemy_textures[0]
+                    enemy.texture = enemy.enemy_textures[0]
                 else:
-                    enemy.texture = self.enemy_textures[1]
+                    enemy.texture = enemy.enemy_textures[1]
 
     def allow_enemies_to_fire(self):
         """
@@ -514,11 +549,13 @@ class MyGame(arcade.View):
 
             # For every enemy we hit, add to the score and remove the enemy
             for enemy in hit_list:
-                enemy.remove_from_sprite_lists()
-                self.score += 1
+                enemy.hitpoints -= 1
+                if enemy.hitpoints <= 0:
+                    enemy.remove_from_sprite_lists()
+                    self.score += 1
 
-                # Hit Sound
-                arcade.play_sound(self.hit_sound)
+                    # Hit Sound
+                    arcade.play_sound(self.hit_sound)
 
             # If the bullet flies off-screen, remove it.
             if bullet.bottom > SCREEN_HEIGHT:
