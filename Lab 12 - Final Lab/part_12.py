@@ -117,6 +117,7 @@ class GameOverView(arcade.View):
         self.window.show_view(game_view)
 
 
+
 class MyGame(arcade.View):
     """ Main application class. """
 
@@ -278,8 +279,10 @@ class MyGame(arcade.View):
         enemy_textures.append(texture)
 
         # Create rows and columns of enemies
-        positions = [200, 580], \
-                    [420, 400]
+        positions = [250, 580], \
+                    [700, 580], \
+                    [420, 400], \
+                    [540, 400]
 
         for position in positions:
             # Create the enemy instance
@@ -293,7 +296,7 @@ class MyGame(arcade.View):
             # Add the enemy to the lists
             self.enemy_list.append(enemy)
 
-            enemy.hitpoints = 1
+            enemy.hitpoints = 4
 
             # re-use list to create the multiple enemy types
 
@@ -304,6 +307,7 @@ class MyGame(arcade.View):
 
         self.player_bullet_list = arcade.SpriteList()
         self.enemy_bullet_list = arcade.SpriteList()
+
 
     def make_shield(self, x_start):
         """
@@ -365,6 +369,13 @@ class MyGame(arcade.View):
         # This command has to happen before we start drawing
         arcade.start_render()
 
+        # Show tip to pause screen
+        arcade.draw_text("Press Esc. to pause",
+                         SCREEN_WIDTH / 2,
+                         SCREEN_HEIGHT - 100,
+                         arcade.color.BLACK,
+                         font_size=20,
+                         anchor_x="center")
 
 
         arcade.draw_lrwh_rectangle_textured(0, 0,
@@ -439,6 +450,12 @@ class MyGame(arcade.View):
 
             # Add the bullet to the appropriate lists
             self.player_bullet_list.append(bullet)
+
+    def on_key_press(self, key, _modifiers):
+        if key == arcade.key.ESCAPE:
+            # pass self, the current view, to preserve this view's state
+            pause = PauseView(self)
+            self.window.show_view(pause)
 
     def update_enemies(self):
 
@@ -525,6 +542,8 @@ class MyGame(arcade.View):
             # See if the player got hit with a bullet
             if arcade.check_for_collision_with_list(self.player_sprite, self.enemy_bullet_list):
                 self.game_state = GAME_OVER
+                # game_over = GameOverView()
+                # self.window.show_view(game_over)
 
             # If the bullet falls off the screen get rid of it
             if bullet.top < 0:
@@ -584,8 +603,58 @@ class MyGame(arcade.View):
         if len(self.enemy_list) == 0:
             self.setup_level_two()
 
+
         self.processing_time = timeit.default_timer() - processing_start_time
 
+class PauseView(arcade.View):
+    def __init__(self, game_view):
+        super().__init__()
+        self.game_view = game_view
+
+    def on_show(self):
+        arcade.set_background_color(arcade.color.ORANGE)
+
+    def on_draw(self):
+        arcade.start_render()
+
+        # Draw player, for effect, on pause screen.
+        # The previous View (GameView) was passed in
+        # and saved in self.game_view.
+        player_sprite = self.game_view.player_sprite
+        player_sprite.draw()
+
+        # draw an orange filter over him
+        arcade.draw_lrtb_rectangle_filled(left=player_sprite.left,
+                                          right=player_sprite.right,
+                                          top=player_sprite.top,
+                                          bottom=player_sprite.bottom,
+                                          color=arcade.color.ORANGE + (200,))
+
+        arcade.draw_text("PAUSED", SCREEN_WIDTH/2, SCREEN_HEIGHT/2+50,
+                         arcade.color.BLACK, font_size=50, anchor_x="center")
+
+        # Show tip to return or reset
+        arcade.draw_text("Press Esc. to return",
+                         SCREEN_WIDTH/2,
+                         SCREEN_HEIGHT/2,
+                         arcade.color.BLACK,
+                         font_size=20,
+                         anchor_x="center")
+        arcade.draw_text("Press Enter to reset",
+                         SCREEN_WIDTH/2,
+                         SCREEN_HEIGHT/2-30,
+                         arcade.color.BLACK,
+                         font_size=20,
+                         anchor_x="center")
+
+    def on_key_press(self, key, _modifiers):
+        if key == arcade.key.ESCAPE:   # resume game
+            self.window.show_view(self.game_view)
+        elif key == arcade.key.ENTER:  # reset game
+            game = MyGame()
+            game.setup()
+            game.setup_level_one()
+            self.window.show_view(game)
 
 def main():
     window = arcade.Window(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE)
