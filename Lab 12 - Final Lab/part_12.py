@@ -102,11 +102,6 @@ class GameOverView(arcade.View):
         # to reset the viewport back to the start so we can see what we draw.
         arcade.set_viewport(0, SCREEN_WIDTH - 1, 0, SCREEN_HEIGHT - 1)
 
-        self.processing_time = 0
-        self.draw_time = 0
-        self.frame_count = 0
-        self.fps_start_timer = None
-        self.fps = None
 
     def on_draw(self):
         """ Draw this view """
@@ -114,12 +109,6 @@ class GameOverView(arcade.View):
         self.texture.draw_sized(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2,
                                 SCREEN_WIDTH, SCREEN_HEIGHT)
 
-        if self.frame_count % 60 == 0:
-            if self.fps_start_timer is not None:
-                total_time = timeit.default_timer() - self.fps_start_timer
-                self.fps = 60 / total_time
-            self.fps_start_timer = timeit.default_timer()
-        self.frame_count += 1
 
     def on_mouse_press(self, _x, _y, _button, _modifiers):
         """ If the user presses the mouse button, re-start the game. """
@@ -136,6 +125,12 @@ class MyGame(arcade.View):
 
         # Call the parent class initializer
         super().__init__()
+
+        self.processing_time = 0
+        self.draw_time = 0
+        self.frame_count = 0
+        self.fps_start_timer = None
+        self.fps = None
 
         self.background = None
 
@@ -232,30 +227,30 @@ class MyGame(arcade.View):
 
     def setup_level_two(self):
         print("bruh")
-        self.background = arcade.load_texture("battleground1.png")
+        self.background = arcade.load_texture("battlefield2.jpg")
 
         # Load the textures for the enemies, one facing left, one right
         enemy_textures = []
-        texture = arcade.load_texture("naziSS.png", mirrored=True)
+        texture = arcade.load_texture("nazisoldier.png", mirrored=True)
         enemy_textures.append(texture)
-        texture = arcade.load_texture("naziSS.png")
+        texture = arcade.load_texture("nazisoldier.png")
         enemy_textures.append(texture)
 
         # Create rows and columns of enemies
-        positions = [380, 580], \
+        positions = [340, 580], \
+                    [380, 580], \
                     [420, 580], \
                     [460, 580], \
                     [500, 580], \
                     [540, 580], \
                     [580, 580], \
                     [620, 580], \
-                    [340, 580], \
+                    [380, 530], \
+                    [420, 530], \
                     [460, 530], \
                     [500, 530], \
                     [540, 530], \
                     [580, 530], \
-                    [420, 530], \
-                    [380, 530], \
                     [420, 480], \
                     [540, 480], \
                     [500, 480], \
@@ -277,14 +272,14 @@ class MyGame(arcade.View):
 
             # Load the textures for the enemies, one facing left, one right
         enemy_textures = []
-        texture = arcade.load_texture("ubernazisoldier.png", mirrored=True)
+        texture = arcade.load_texture("naziSS.png", mirrored=True)
         enemy_textures.append(texture)
-        texture = arcade.load_texture("ubernazisoldier.png")
+        texture = arcade.load_texture("naziSS.png")
         enemy_textures.append(texture)
 
         # Create rows and columns of enemies
         positions = [200, 580], \
-                    [420, 300]
+                    [420, 400]
 
         for position in positions:
             # Create the enemy instance
@@ -297,6 +292,8 @@ class MyGame(arcade.View):
             enemy.position = position
             # Add the enemy to the lists
             self.enemy_list.append(enemy)
+
+            enemy.hitpoints = 1
 
             # re-use list to create the multiple enemy types
 
@@ -356,14 +353,24 @@ class MyGame(arcade.View):
     def on_draw(self):
         """ Render the screen. """
 
+        draw_start_time = timeit.default_timer()
+
+        if self.frame_count % 60 == 0:
+            if self.fps_start_timer is not None:
+                total_time = timeit.default_timer() - self.fps_start_timer
+                self.fps = 60 / total_time
+            self.fps_start_timer = timeit.default_timer()
+        self.frame_count += 1
+
         # This command has to happen before we start drawing
         arcade.start_render()
+
+
 
         arcade.draw_lrwh_rectangle_textured(0, 0,
                                             SCREEN_WIDTH, SCREEN_HEIGHT,
                                             self.background)
 
-        draw_start_time = timeit.default_timer()
 
         # Draw all the sprites.
         self.enemy_list.draw()
@@ -564,6 +571,8 @@ class MyGame(arcade.View):
     def on_update(self, delta_time):
         """ Movement and game logic """
 
+        processing_start_time = timeit.default_timer()
+
         if self.game_state == GAME_OVER:
             return
 
@@ -574,6 +583,8 @@ class MyGame(arcade.View):
 
         if len(self.enemy_list) == 0:
             self.setup_level_two()
+
+        self.processing_time = timeit.default_timer() - processing_start_time
 
 
 def main():
