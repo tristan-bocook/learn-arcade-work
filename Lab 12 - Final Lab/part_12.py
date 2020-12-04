@@ -1,3 +1,6 @@
+"""
+Blood and Iron
+"""
 import random
 import arcade
 import timeit
@@ -78,7 +81,7 @@ class InstructionView(arcade.View):
                          SCREEN_WIDTH / 2, (SCREEN_HEIGHT / 2) - 25, arcade.color.YELLOW, font_size=16, anchor_x="center")
         arcade.draw_text("You will be provided cover but note that the cover will disappear as it gets shot. BE WISE.",
                          SCREEN_WIDTH / 2, (SCREEN_HEIGHT / 2) - 75, arcade.color.YELLOW, font_size=16, anchor_x="center")
-        arcade.draw_text("The nazis think you'll fear their numbers, but you are russian. you dont know defeat. DON'T QUIT!",
+        arcade.draw_text("The Nazis think you'll fear their numbers, but you are Russian. you don't know defeat. DON'T QUIT!",
                          SCREEN_WIDTH / 2, (SCREEN_HEIGHT / 2) - 125, arcade.color.YELLOW, font_size=16, anchor_x="center")
 
         arcade.draw_text("Click to advance", SCREEN_WIDTH/2, 100,
@@ -102,20 +105,17 @@ class GameOverView(arcade.View):
         # to reset the viewport back to the start so we can see what we draw.
         arcade.set_viewport(0, SCREEN_WIDTH - 1, 0, SCREEN_HEIGHT - 1)
 
-
     def on_draw(self):
         """ Draw this view """
         arcade.start_render()
         self.texture.draw_sized(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2,
                                 SCREEN_WIDTH, SCREEN_HEIGHT)
 
-
     def on_mouse_press(self, _x, _y, _button, _modifiers):
         """ If the user presses the mouse button, re-start the game. """
         game_view = MyGame()
         game_view.setup()
         self.window.show_view(game_view)
-
 
 
 class MyGame(arcade.View):
@@ -155,7 +155,6 @@ class MyGame(arcade.View):
         self.processing_time = 0
         self.draw_time = 0
         self.fps = 0
-
 
         # Enemy movement
         self.enemy_change_x = -ENEMY_SPEED
@@ -308,7 +307,6 @@ class MyGame(arcade.View):
         self.player_bullet_list = arcade.SpriteList()
         self.enemy_bullet_list = arcade.SpriteList()
 
-
     def make_shield(self, x_start):
         """
         Make a shield, which is just a 2D grid of solid color sprites
@@ -348,7 +346,6 @@ class MyGame(arcade.View):
         self.player_sprite.center_y = 40
         self.player_list.append(self.player_sprite)
 
-
         # Set the background color
         arcade.set_background_color(arcade.color.AMAZON)
 
@@ -377,11 +374,9 @@ class MyGame(arcade.View):
                          font_size=20,
                          anchor_x="center")
 
-
         arcade.draw_lrwh_rectangle_textured(0, 0,
                                             SCREEN_WIDTH, SCREEN_HEIGHT,
                                             self.background)
-
 
         # Draw all the sprites.
         self.enemy_list.draw()
@@ -603,8 +598,8 @@ class MyGame(arcade.View):
         if len(self.enemy_list) == 0:
             self.setup_level_two()
 
-
         self.processing_time = timeit.default_timer() - processing_start_time
+
 
 class PauseView(arcade.View):
     def __init__(self, game_view):
@@ -655,6 +650,7 @@ class PauseView(arcade.View):
             game.setup()
             game.setup_level_one()
             self.window.show_view(game)
+
 
 def main():
     window = arcade.Window(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE)
